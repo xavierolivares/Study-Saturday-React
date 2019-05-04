@@ -32,8 +32,6 @@ export default class Main extends React.Component {
     console.log('state is ', this.state)
     return (
         <h1>{'Hello React!'}</h1>
-
     );
     }
-    
 }
