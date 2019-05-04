@@ -1,3 +1,6 @@
+
+//in components folers, we need React and Axios. Not ReactDOM
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
@@ -8,16 +11,19 @@ export default class Main extends React.Component {
     constructor(){
         super()
         this.state = {
-            students: {}
+            students: [],
         }
+        //whatever the parent structure is, that type is what the data type of the parent structure is
+
     }
 
     async componentDidMount() {
         //{data} was initially an object
         //I needed to destructure it in order to pull the actual data I needed
         
-        const {data}= await axios.get('/student')
-        console.log('data is ', data)
+        //axious is a way we can grab 
+
+        const {data} = await axios.get('student')
         this.setState({
             students: data
         })
@@ -29,9 +35,19 @@ export default class Main extends React.Component {
         //console.log what i'm receiving from the db
     }
     render() {
-    console.log('state is ', this.state)
+
     return (
-        <h1>{'Hello React!'}</h1>
+    <div>
+        <table>
+            <tr>Name</tr>
+            {
+                this.state.students.map(student => {
+                <tr key={student.id}><td>{student.fullName}</td></tr>})
+            }
+
+        </table>
+    </div>
+  
     );
     }
 }

@@ -9918,9 +9918,13 @@ var _Main2 = _interopRequireDefault(_Main);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// we hook up our component to index.js with import 'component name'
+
 console.log('Hello Webpack!');
 
 _reactDom2.default.render(_react2.default.createElement(_Main2.default, null), document.getElementById('app'));
+
+// once we run npm start, webpack grabs whatever is in brower/index.js and is rendering it to the virtual DOM to the html
 
 /***/ }),
 /* 339 */
@@ -34723,6 +34727,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+//in components folers, we need React and Axios. Not ReactDOM
 
 //how do i gather data from the database?
 
@@ -34735,9 +34740,10 @@ var Main = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this));
 
         _this.state = {
-            students: {}
-        };
-        return _this;
+            students: []
+            //whatever the parent structure is, that type is what the data type of the parent structure is
+
+        };return _this;
     }
 
     _createClass(Main, [{
@@ -34751,13 +34757,12 @@ var Main = function (_React$Component) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 _context.next = 2;
-                                return _axios2.default.get('/student');
+                                return _axios2.default.get('student');
 
                             case 2:
                                 _ref2 = _context.sent;
                                 data = _ref2.data;
 
-                                console.log('data is ', data);
                                 this.setState({
                                     students: data
                                 });
@@ -34768,7 +34773,7 @@ var Main = function (_React$Component) {
                                 // practice using axios to get the students
                                 //console.log what i'm receiving from the db
 
-                            case 6:
+                            case 5:
                             case 'end':
                                 return _context.stop();
                         }
@@ -34785,11 +34790,30 @@ var Main = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            console.log('state is ', this.state);
+
             return _react2.default.createElement(
-                'h1',
+                'div',
                 null,
-                'Hello React!'
+                _react2.default.createElement(
+                    'table',
+                    null,
+                    _react2.default.createElement(
+                        'tr',
+                        null,
+                        'Name'
+                    ),
+                    this.state.students.map(function (student) {
+                        _react2.default.createElement(
+                            'tr',
+                            { key: student.id },
+                            _react2.default.createElement(
+                                'td',
+                                null,
+                                student.fullName
+                            )
+                        );
+                    })
+                )
             );
         }
     }]);
